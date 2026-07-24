@@ -132,5 +132,5 @@ Authorization: Bearer <token>
 ## Notas
 
 - La API usa el puerto **8001** (configurado en `frontend/src/environments/environment.ts`).
-- La carpeta `docs/` está ignorada en git de forma local.
+- La documentación de análisis (requerimientos, ER, Notion/Miro) está en la carpeta `docs/`.
 - Este proyecto corresponde a la asignatura **Análisis de Sistemas II**.
