@@ -11,3 +11,7 @@ __pycache__/
 # IDEs
 .vscode/
 .idea/
+
+# Base de datos local
+*.db
+*.db-journal

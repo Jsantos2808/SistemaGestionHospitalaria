@@ -1,0 +1,43 @@
+<div class="login-page">
+  <div class="login-visual" aria-hidden="true">
+    <div class="visual-overlay"></div>
+    <div class="visual-copy">
+      <p class="brand">Hospital Santos</p>
+      <h1>Cuidado organizado, atención clara.</h1>
+      <p class="tagline">Sistema de gestión clínica para pacientes, citas e historial médico.</p>
+    </div>
+  </div>
+
+  <div class="login-panel">
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <p class="eyebrow">Acceso al sistema</p>
+      <h2>Iniciar sesión</h2>
+      <p class="hint">Usa las credenciales de demo para entrar.</p>
+
+      <label>
+        Usuario
+        <input type="text" name="username" [(ngModel)]="username" autocomplete="username" required />
+      </label>
+
+      <label>
+        Contraseña
+        <input type="password" name="password" [(ngModel)]="password" autocomplete="current-password" required />
+      </label>
+
+      @if (error) {
+        <p class="error">{{ error }}</p>
+      }
+
+      <button type="submit" [disabled]="loading || !username || !password">
+        {{ loading ? 'Entrando…' : 'Entrar' }}
+      </button>
+
+      <div class="demo-box">
+        <strong>Usuarios demo</strong>
+        <span>admin / admin123</span>
+        <span>medico / medico123</span>
+        <span>recepcion / recepcion123</span>
+      </div>
+    </form>
+  </div>
+</div>

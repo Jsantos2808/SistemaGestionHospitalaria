@@ -1,0 +1,80 @@
+<section class="page">
+  <header class="page-header row">
+    <div>
+      <p class="eyebrow">Módulo</p>
+      <h1>Citas</h1>
+      <p class="lead">Programar, reprogramar y cancelar citas médicas.</p>
+    </div>
+    <button type="button" class="btn primary" (click)="openCreate()">Nueva cita</button>
+  </header>
+
+  @if (error) { <p class="alert">{{ error }}</p> }
+  @if (success) { <p class="ok">{{ success }}</p> }
+
+  @if (showForm) {
+    <form class="form-panel" (ngSubmit)="save()">
+      <h2>{{ editingId ? 'Editar cita' : 'Nueva cita' }}</h2>
+      <div class="grid-2">
+        <label>
+          Paciente
+          <select [(ngModel)]="form.id_paciente" name="paciente" required>
+            @for (p of pacientes; track p.id_paciente) {
+              <option [ngValue]="p.id_paciente">{{ p.nombre }} {{ p.apellido }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Médico
+          <select [(ngModel)]="form.id_medico" name="medico" required>
+            @for (m of medicos; track m.id_medico) {
+              <option [ngValue]="m.id_medico">{{ m.nombre }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Fecha y hora
+          <input type="datetime-local" [(ngModel)]="form.fecha_hora" name="fecha" required />
+        </label>
+        <label>
+          Estado
+          <select [(ngModel)]="form.estado" name="estado">
+            @for (e of estados; track e) {
+              <option [value]="e">{{ e }}</option>
+            }
+          </select>
+        </label>
+        <label class="full">Motivo <input [(ngModel)]="form.motivo" name="motivo" required /></label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn ghost" (click)="cancel()">Cancelar</button>
+        <button type="submit" class="btn primary">Guardar</button>
+      </div>
+    </form>
+  }
+
+  <div class="cards">
+    @for (c of citas; track c.id_cita) {
+      <article class="card">
+        <div class="card-top">
+          <div>
+            <h3>{{ c.paciente_nombre }}</h3>
+            <p>{{ c.medico_nombre }}</p>
+          </div>
+          <span class="status" [class]="statusClass(c.estado)">{{ c.estado }}</span>
+        </div>
+        <p class="motivo">{{ c.motivo }}</p>
+        <p class="when">{{ c.fecha_hora | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <div class="card-actions">
+          <button type="button" class="btn ghost sm" (click)="openEdit(c)">Editar</button>
+          @if (c.estado === 'Programada') {
+            <button type="button" class="btn ghost sm" (click)="setEstado(c, 'Completada')">Completar</button>
+            <button type="button" class="btn ghost sm" (click)="setEstado(c, 'Cancelada')">Cancelar</button>
+          }
+          <button type="button" class="btn danger sm" (click)="remove(c)">Eliminar</button>
+        </div>
+      </article>
+    } @empty {
+      <p class="empty">No hay citas registradas.</p>
+    }
+  </div>
+</section>

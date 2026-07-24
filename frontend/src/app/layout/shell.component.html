@@ -1,0 +1,44 @@
+<div class="shell" [class.menu-open]="menuOpen">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <span class="mark" aria-hidden="true"></span>
+      <div>
+        <p class="brand">Hospital Santos</p>
+        <p class="brand-sub">Gestión clínica</p>
+      </div>
+    </div>
+
+    <nav>
+      @for (item of nav; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact }"
+          (click)="closeMenu()"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-foot">
+      <p class="user-name">{{ user?.nombre }}</p>
+      <p class="user-role">{{ user?.rol }}</p>
+      <button type="button" class="logout-btn" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <button type="button" class="menu-btn" (click)="toggleMenu()" aria-label="Abrir menú">☰</button>
+      <p class="topbar-title">Sistema de Gestión Hospitalaria</p>
+    </header>
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+
+  @if (menuOpen) {
+    <div class="backdrop" (click)="closeMenu()"></div>
+  }
+</div>

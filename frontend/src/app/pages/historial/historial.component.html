@@ -1,0 +1,94 @@
+<section class="page">
+  <header class="page-header row">
+    <div>
+      <p class="eyebrow">Módulo</p>
+      <h1>Historial médico</h1>
+      <p class="lead">Diagnósticos, tratamientos y notas clínicas.</p>
+    </div>
+    <button type="button" class="btn primary" (click)="openCreate()">Nuevo registro</button>
+  </header>
+
+  @if (error) { <p class="alert">{{ error }}</p> }
+  @if (success) { <p class="ok">{{ success }}</p> }
+
+  <div class="toolbar">
+    <label>
+      Filtrar por paciente
+      <select [(ngModel)]="filtroPaciente" (ngModelChange)="onFilterChange()" name="filtro">
+        <option [ngValue]="null">Todos</option>
+        @for (p of pacientes; track p.id_paciente) {
+          <option [ngValue]="p.id_paciente">{{ p.nombre }} {{ p.apellido }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  @if (showForm) {
+    <form class="form-panel" (ngSubmit)="save()">
+      <h2>{{ editingId ? 'Editar historial' : 'Nuevo historial' }}</h2>
+      <div class="grid-2">
+        <label>
+          Paciente
+          <select [(ngModel)]="form.id_paciente" name="paciente" required>
+            @for (p of pacientes; track p.id_paciente) {
+              <option [ngValue]="p.id_paciente">{{ p.nombre }} {{ p.apellido }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Médico
+          <select [(ngModel)]="form.id_medico" name="medico" required>
+            @for (m of medicos; track m.id_medico) {
+              <option [ngValue]="m.id_medico">{{ m.nombre }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Fecha de visita
+          <input type="date" [(ngModel)]="form.fecha_visita" name="fecha" required />
+        </label>
+        <label class="full">
+          Diagnóstico
+          <input [(ngModel)]="form.diagnostico" name="diagnostico" required />
+        </label>
+        <label class="full">
+          Tratamiento
+          <textarea rows="3" [(ngModel)]="form.tratamiento" name="tratamiento" required></textarea>
+        </label>
+        <label class="full">
+          Notas adicionales
+          <textarea rows="2" [(ngModel)]="form.notas_adicionales" name="notas"></textarea>
+        </label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn ghost" (click)="cancel()">Cancelar</button>
+        <button type="submit" class="btn primary">Guardar</button>
+      </div>
+    </form>
+  }
+
+  <div class="timeline">
+    @for (h of historiales; track h.id_historial) {
+      <article class="entry">
+        <div class="entry-date">{{ h.fecha_visita | date: 'dd MMM yyyy' }}</div>
+        <div class="entry-body">
+          <div class="entry-head">
+            <h3>{{ h.paciente_nombre }}</h3>
+            <span>{{ h.medico_nombre }}</span>
+          </div>
+          <p><strong>Diagnóstico:</strong> {{ h.diagnostico }}</p>
+          <p><strong>Tratamiento:</strong> {{ h.tratamiento }}</p>
+          @if (h.notas_adicionales) {
+            <p class="notas">{{ h.notas_adicionales }}</p>
+          }
+          <div class="entry-actions">
+            <button type="button" class="btn ghost sm" (click)="openEdit(h)">Editar</button>
+            <button type="button" class="btn danger sm" (click)="remove(h)">Eliminar</button>
+          </div>
+        </div>
+      </article>
+    } @empty {
+      <p class="empty">No hay registros de historial.</p>
+    }
+  </div>
+</section>

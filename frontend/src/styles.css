@@ -1,1 +1,100 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --teal-600: #0f7680;
+  --teal-700: #0d5f68;
+  --teal-800: #0a4a51;
+  --ink: #12252a;
+  --muted: #5b7278;
+  --line: #d5e3e6;
+  --bg: #eef5f6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--teal-700);
+  font-weight: 700;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn.sm {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.btn.primary {
+  background: var(--teal-700);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: var(--teal-800);
+  transform: translateY(-1px);
+}
+
+.btn.ghost {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn.ghost:hover {
+  background: #f4fafa;
+}
+
+.btn.danger {
+  background: #fff;
+  border-color: #fecdca;
+  color: #b42318;
+}
+
+.btn.danger:hover {
+  background: #fef3f2;
+}
+
+.alert {
+  background: #fef3f2;
+  color: #b42318;
+  border: 1px solid #fecdca;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.ok {
+  background: #e8f8ef;
+  color: #067647;
+  border: 1px solid #abefc6;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+}

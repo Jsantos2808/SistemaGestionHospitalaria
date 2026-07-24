@@ -1,0 +1,68 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Inicio</p>
+      <h1>Bienvenido, {{ user?.nombre }}</h1>
+      <p class="lead">Resumen operativo del hospital para hoy.</p>
+    </div>
+  </header>
+
+  @if (error) {
+    <p class="alert">{{ error }}</p>
+  }
+
+  @if (stats) {
+    <div class="stats">
+      <article>
+        <p class="stat-label">Pacientes</p>
+        <p class="stat-value">{{ stats.total_pacientes }}</p>
+      </article>
+      <article>
+        <p class="stat-label">Citas de hoy</p>
+        <p class="stat-value">{{ stats.citas_hoy }}</p>
+      </article>
+      <article>
+        <p class="stat-label">Programadas</p>
+        <p class="stat-value">{{ stats.citas_programadas }}</p>
+      </article>
+      <article>
+        <p class="stat-label">Historiales</p>
+        <p class="stat-value">{{ stats.total_historiales }}</p>
+      </article>
+    </div>
+  }
+
+  <div class="panels">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Próximas citas</h2>
+        <a routerLink="/app/citas">Ver todas</a>
+      </div>
+      @if (proximas.length === 0) {
+        <p class="empty">No hay citas programadas.</p>
+      } @else {
+        <ul class="list">
+          @for (cita of proximas; track cita.id_cita) {
+            <li>
+              <div>
+                <strong>{{ cita.paciente_nombre }}</strong>
+                <span>{{ cita.motivo }}</span>
+              </div>
+              <div class="meta">
+                <span>{{ cita.fecha_hora | date: 'dd/MM/yyyy HH:mm' }}</span>
+                <span class="badge">{{ cita.estado }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <section class="panel shortcuts">
+      <h2>Accesos rápidos</h2>
+      <a routerLink="/app/pacientes">Gestionar pacientes</a>
+      <a routerLink="/app/citas">Programar cita</a>
+      <a routerLink="/app/historial">Consultar historial</a>
+    </section>
+  </div>
+</section>
